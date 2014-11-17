@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Title Page</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+  <style type="text/css">
+  .disp-none {display: none;}
+  </style>
+</head>
+
+<body class="container">
+  <h1 class="text-center">LCD Remote Controller</h1>
+  <hr/>
+
+  <form role="form">
+    <div class="form-group">
+      <label for="printText">Print Text</label>
+      <input type="email" class="form-control" id="printText" placeholder="Enter Text">
+    </div>
+
+    <div class="alert alert-warning disp-none" id="required">Print Text cannot be empty</div>
+    <div class="alert alert-danger disp-none" id="error">Oops something went wrong!</div>
+    <div class="alert alert-success disp-none" id="success">Success!! Check your LCD display</div>
+
+    <button type="button" id="submit" class="btn btn-success">Submit</button>
+  </form>
+
+  <!-- jQuery -->
+  <script src="//code.jquery.com/jquery.js"></script>
+  <script type="text/javascript">
+  $('#submit').click(function() {
+    $('.alert').hide();
+    var val = $('#printText').val().trim();
+    if (val.length > 0) {
+      $.get('/print/' + val, function(resp) {
+        if (resp.status) {
+          $('#success').show();
+        } else {
+          $('#errror').show();
+        }
+      });
+    } else {
+      $('#required').show();
+    }
+
+  });
+  </script>
+</body>
+
+</html>
